@@ -32,17 +32,38 @@ public class Customer {
 
     private Role role;
 
+    private int donorUnit;
+    private int requestUnit;
+
     public Customer() {
 
     }
 
-    public Customer(String fname, String lname, String ssn, String email, BloodType bloodType, Role role) {
+    public Customer(String fname, String lname, String ssn, String email, BloodType bloodType, Role role, int donorUnit, int requestUnit) {
         this.fname = fname;
         this.lname = lname;
         this.ssn = ssn;
         this.email = email;
         this.bloodType = bloodType;
         this.role = role;
+        this.donorUnit = donorUnit;
+        this.requestUnit = requestUnit;
+    }
+
+    public int getDonorUnit() {
+        return donorUnit;
+    }
+
+    public void setDonorUnit(int donorUnit) {
+        this.donorUnit = donorUnit;
+    }
+
+    public int getRequestUnit() {
+        return requestUnit;
+    }
+
+    public void setRequestUnit(int requestUnit) {
+        this.requestUnit = requestUnit;
     }
 
     public Integer getId() {
