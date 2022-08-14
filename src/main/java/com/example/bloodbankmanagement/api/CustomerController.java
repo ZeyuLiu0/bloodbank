@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("customer")
@@ -40,22 +41,20 @@ public class CustomerController {
 
     @PutMapping("updateAll")
     public Customer updateAll(@RequestBody Customer customer){
-        Customer existCustomer = findById(customer.getId());
-        existCustomer.setDonorUnit(customer.getDonorUnit());
-        existCustomer.setRequestUnit(customer.getRequestUnit());
-        existCustomer.setBloodType(customer.getBloodType());
-        existCustomer.setEmail(customer.getEmail());
-        existCustomer.setFname(customer.getFname());
-        existCustomer.setLname(customer.getLname());
-        existCustomer.setRole(customer.getRole());
-        existCustomer.setSsn(customer.getSsn());
-        return existCustomer;
+        Optional<Customer> dummyCustomer = customerRepository.findById(customer.getId());
+        if(dummyCustomer.isPresent()){
+            customerRepository.save(customer);
+            return customer;
+        }else{
+            return null;
+        }
     }
 
     @PatchMapping("donorUpdate/{id}/{count}")
     public Customer donorUpdate(@PathVariable int id, @PathVariable int count){
         Customer customer = findById(id);
         customer.setDonorUnit(customer.getDonorUnit()+count);
+        customerRepository.save(customer);
         return customer;
     }
 
@@ -63,6 +62,7 @@ public class CustomerController {
     public Customer requestUpdate(@PathVariable int id, @PathVariable int count){
         Customer customer = findById(id);
         customer.setRequestUnit(customer.getRequestUnit()+count);
+        customerRepository.save(customer);
         return customer;
     }
 

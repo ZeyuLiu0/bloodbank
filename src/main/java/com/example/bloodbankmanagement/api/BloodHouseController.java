@@ -56,7 +56,6 @@ public class BloodHouseController {
             bloodHouseRepository.save(mid);
             return mid;
         }else {
-            System.out.println("not exist id");
             return new BloodHouse(null, -1);
         }
     }
@@ -72,9 +71,18 @@ public class BloodHouseController {
                 bloodHouseRepository.save(mid);
                 return mid;
             }else{
-                System.out.println("Unit is not enough");
                 return new BloodHouse(null, 0);
             }
+        }else{
+            return new BloodHouse(null, -1);
+        }
+    }
+    @DeleteMapping("delete/{id}")
+    public BloodHouse deleteType(@PathVariable BloodType id){
+        Optional<BloodHouse> bloodHouse = bloodHouseRepository.findById(id);
+        if(bloodHouse.isPresent()){
+            bloodHouseRepository.deleteById(id);
+            return bloodHouse.get();
         }else{
             return new BloodHouse(null, -1);
         }
